@@ -15,7 +15,7 @@ function OTPVerification() {
     const [error, setError] = useState("")
 
     function validInput(input) {
-        if(Number(input)>=0 && Number(input)<=9) return true
+        if (Number(input) >= 0 && Number(input) <= 9) return true
         else return false
     }
 
@@ -23,35 +23,48 @@ function OTPVerification() {
         var target = e.target;
         var inputMaxLength = target.maxLength
         var inputLength = target.value.length
-        if(!validInput(target.value)) {
+        if (!validInput(target.value)) {
             setError("Enter the valid input.")
         } else {
             setError("")
-            if(inputLength>=inputMaxLength) {
-                setError("")
-                var next = target;
-                while(next = next.nextElementSibling) {
-                    if(next === null) break;
-                    if(target.tagName.toLowerCase() === "input") {
-                        next.focus();
-                        break;
-                    }
-                }
+            if (inputLength >= inputMaxLength) {
+                focusNext(target)
             }
-            else if(inputLength === 0) {
-                var prev = target;
-                while(prev = prev.previousElementSibling) {
-                    if(prev === null) break;
-                    if(target.tagName.toLowerCase() === "input") {
-                        prev.focus();
-                        break;
-                    }
-                }
+            else if (inputLength === 0) {
+                focusPrev(target)
             }
         }
-        
+        if(e.keyCode === 39) {
+            focusNext(target)
+        } 
+        if(e.keyCode === 37) {
+            focusPrev(target)
+        }
+
     }
-    
+
+    function focusNext(target) {
+        var next = target;
+        while (next = next.nextElementSibling) {
+            if (next === null) break;
+            if (target.tagName.toLowerCase() === "input") {
+                next.focus();
+                break;
+            }
+        }
+    }
+
+    function focusPrev(target) {
+        var prev = target;
+        while (prev = prev.previousElementSibling) {
+            if (prev === null) break;
+            if (target.tagName.toLowerCase() === "input") {
+                prev.focus();
+                break;
+            }
+        }
+    }
+
 
     return (
         <div className="OTPVerification">
@@ -59,12 +72,12 @@ function OTPVerification() {
             <form>
                 <label>Enter the OTP you received on 89206-6XXXX</label>
                 <div onKeyUp={(e) => moveFocus(e)}>
-                    <input autoFocus onChange={(e)=>setInputForm({...inputForm, input01: validInput(e.target.value) ? e.target.value: ""})} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e)=>setInputForm({...inputForm, input02: validInput(e.target.value) ? e.target.value: ""})} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e)=>setInputForm({...inputForm, input03: validInput(e.target.value) ? e.target.value: ""})} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e)=>setInputForm({...inputForm, input04: validInput(e.target.value) ? e.target.value: ""})} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e)=>setInputForm({...inputForm, input05: validInput(e.target.value) ? e.target.value: ""})} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e)=>setInputForm({...inputForm, input06: validInput(e.target.value) ? e.target.value: ""})} className="input" type="text" maxLength={1} required />
+                    <input autoFocus onChange={(e) => setInputForm({ ...inputForm, input01: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input onChange={(e) => setInputForm({ ...inputForm, input02: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input onChange={(e) => setInputForm({ ...inputForm, input03: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input onChange={(e) => setInputForm({ ...inputForm, input04: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input onChange={(e) => setInputForm({ ...inputForm, input05: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input onChange={(e) => setInputForm({ ...inputForm, input06: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
                 </div>
                 <div className="editInfo">
                     <span className="text-blue">Change number</span>
