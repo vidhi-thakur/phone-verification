@@ -72,6 +72,9 @@ function OTPVerification() {
             if (checkForAllInputs(arrayOfInput)) {
                 updateInputValue(arrayOfInput)
             }
+            else {
+                setError("Enter valid data")
+            }
         } else {
             setError("OTP should be 6 digit!")
         }
