@@ -34,13 +34,12 @@ function OTPVerification() {
                 focusPrev(target)
             }
         }
-        if(e.keyCode === 39) {
+        if (e.keyCode === 39) {
             focusNext(target)
-        } 
-        if(e.keyCode === 37) {
+        }
+        if (e.keyCode === 37) {
             focusPrev(target)
         }
-
     }
 
     function focusNext(target) {
@@ -65,19 +64,54 @@ function OTPVerification() {
         }
     }
 
+    const pasteDataFromClipboard = (e) => {
+        var clipboardData = e.clipboardData.getData('text');
+        if (clipboardData.length === 6) {
+            setError("");
+            var arrayOfInput = clipboardData.split('')
+            if (checkForAllInputs(arrayOfInput)) {
+                updateInputValue(arrayOfInput)
+            }
+        } else {
+            setError("OTP should be 6 digit!")
+        }
+    }
+
+    function updateInputValue(arrayOfInput) {
+        arrayOfInput.map((input, i) => {
+            inputForm[`input0${i + 1}`] = input;
+        });
+    }
+
+    function checkForAllInputs(arr) {
+        var count = 0;
+        arr.map(data => {
+            if (validInput(data)) {
+                count++
+                console.log(count)
+            }
+        })
+        if (count === 6) {
+            console.log(count)
+            return true
+        }
+        else {
+            return false
+        }
+    }
 
     return (
         <div className="OTPVerification">
             <header>Phone Verification</header>
             <form>
                 <label>Enter the OTP you received on 89206-6XXXX</label>
-                <div onKeyUp={(e) => moveFocus(e)}>
-                    <input autoFocus onChange={(e) => setInputForm({ ...inputForm, input01: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e) => setInputForm({ ...inputForm, input02: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e) => setInputForm({ ...inputForm, input03: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e) => setInputForm({ ...inputForm, input04: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e) => setInputForm({ ...inputForm, input05: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
-                    <input onChange={(e) => setInputForm({ ...inputForm, input06: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                <div onKeyUp={(e) => moveFocus(e)} onPaste={(e) => pasteDataFromClipboard(e)}>
+                    <input autoFocus value={inputForm.input01} onChange={(e) => setInputForm({ ...inputForm, input01: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input value={inputForm.input02} onChange={(e) => setInputForm({ ...inputForm, input02: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input value={inputForm.input03} onChange={(e) => setInputForm({ ...inputForm, input03: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input value={inputForm.input04} onChange={(e) => setInputForm({ ...inputForm, input04: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input value={inputForm.input05} onChange={(e) => setInputForm({ ...inputForm, input05: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
+                    <input value={inputForm.input06} onChange={(e) => setInputForm({ ...inputForm, input06: validInput(e.target.value) ? e.target.value : "" })} className="input" type="text" maxLength={1} required />
                 </div>
                 <div className="editInfo">
                     <span className="text-blue">Change number</span>
