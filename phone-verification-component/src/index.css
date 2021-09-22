@@ -1,4 +1,5 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -7,6 +8,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
+.button {
+  background-color: var(--primary-color);
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: white;
+  border: 1px solid var(--primary-color);
+}
+
+.button:hover {
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.text-blue {
+  color: rgb(7, 7, 146);
+  cursor: pointer;
+}
+
+.text-blue:hover {
+  color: rgb(0, 0, 255);
 }

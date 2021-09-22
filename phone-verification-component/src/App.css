@@ -10,17 +10,8 @@
 }
 
 .OTPVerificationButton {
-  background-color: var(--primary-color);
-  cursor: pointer;
-  padding: 1rem 2.5rem;
-  font-size: 1.3rem;
-  color: white;
-  border: 1px solid var(--primary-color);
   border-radius: 0.5rem;
-}
-
-.OTPVerificationButton:hover {
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 1rem 2.5rem;
 }
 
 .main {

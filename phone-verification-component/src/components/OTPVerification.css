@@ -21,4 +21,38 @@ header {
     border-bottom: 1px solid black;
     margin: 1.5rem 0.5rem;
     text-align: center;
+    padding-bottom: 5px;
+}
+
+form{
+    padding: 1rem 0px;
+}
+
+.OTPSubmitButton {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+}
+
+.error {
+    width: 100%;
+    color: rgb(201, 13, 13);
+}
+
+.editInfo {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem 0px;
+    width: 323px;
+    max-width: 80%;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 420px) {
+    .input {
+        margin: 1.5rem 0.25rem;
+        width: 30px;
+    }
 }

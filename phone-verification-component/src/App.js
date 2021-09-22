@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <div className="main">
         {
-          !verifyOTP? <button onClick={() => setVerifyOTP(true)} className="OTPVerificationButton">Verify OTP</button>: <OTPVerification />
+          !verifyOTP? <button onClick={() => setVerifyOTP(true)} className="OTPVerificationButton button">Verify OTP</button>: <OTPVerification />
         }
       </div>
     </div>
