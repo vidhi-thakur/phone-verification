@@ -15,10 +15,60 @@ function OTPVerification() {
     const [inputForm, setInputForm] = useState(initialState)
     const [error, setError] = useState("")
     const [show, setShow] = useState(false);
+    const [success, setSuccess] = useState(false)
 
     function validInput(input) {
         if (Number(input) >= 0 && Number(input) <= 9) return true
         else return false
+    }
+
+    function focusNext(target) {
+        var next = target;
+        while (next = next.nextElementSibling) {
+            if (next === null) break;
+            if (target.tagName.toLowerCase() === "input") {
+                next.focus();
+                break;
+            }
+        }
+    }
+
+    function focusPrev(target) {
+        var prev = target;
+        while (prev = prev.previousElementSibling) {
+            if (prev === null) break;
+            if (target.tagName.toLowerCase() === "input") {
+                prev.focus();
+                break;
+            }
+        }
+    }
+
+    function updateInputValue(arrayOfInput) {
+        arrayOfInput.map((input, i) => {
+            inputForm[`input0${i + 1}`] = input;
+        });
+    }
+
+    function checkForAllInputs(arr) {
+        var count = 0;
+        arr.map(data => {
+            if (validInput(data)) {
+                count++
+            }
+        })
+        if (count === 6) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setSuccess(true)
+        setInputForm(initialState)
     }
 
     const moveFocus = (e) => {
@@ -45,33 +95,13 @@ function OTPVerification() {
         }
     }
 
-    function focusNext(target) {
-        var next = target;
-        while (next = next.nextElementSibling) {
-            if (next === null) break;
-            if (target.tagName.toLowerCase() === "input") {
-                next.focus();
-                break;
-            }
-        }
-    }
-
-    function focusPrev(target) {
-        var prev = target;
-        while (prev = prev.previousElementSibling) {
-            if (prev === null) break;
-            if (target.tagName.toLowerCase() === "input") {
-                prev.focus();
-                break;
-            }
-        }
-    }
-
     const pasteDataFromClipboard = (e) => {
         var clipboardData = e.clipboardData.getData('text');
         if (clipboardData.length === 6) {
+            setShow(false)
+            setError("")
             var arrayOfInput = clipboardData.split('')
-            if (checkForAllInputs(arrayOfInput)) {
+            if (checkForAllInputs(arrayOfInput) && clipboardData.length === 6) {
                 updateInputValue(arrayOfInput)
             }
             else {
@@ -82,28 +112,6 @@ function OTPVerification() {
         } else {
             setError("Invalid data! Entered OTP should be a 6 digit number.")
             setShow(true)
-            setTimeout(() => setShow(false), 10000);
-        }
-    }
-
-    function updateInputValue(arrayOfInput) {
-        arrayOfInput.map((input, i) => {
-            inputForm[`input0${i + 1}`] = input;
-        });
-    }
-
-    function checkForAllInputs(arr) {
-        var count = 0;
-        arr.map(data => {
-            if (validInput(data)) {
-                count++
-            }
-        })
-        if (count === 6) {
-            return true
-        }
-        else {
-            return false
         }
     }
 
@@ -124,9 +132,9 @@ function OTPVerification() {
                     <span className="text-blue">Change number</span>
                     <span className="text-blue">Re-send OTP</span>
                 </div>
-                <button className="button OTPSubmitButton">Verify Phone Number</button>
+                <button type="submit" onClick={(e) => handleSubmit(e)} className="button OTPSubmitButton">Verify Phone Number</button>
             </form>
-            <div className="errorAlert">
+            <div className="alert">
                 {show && <Alert variant="danger" onClose={() => setShow(false)} dismissible>
                     <Alert.Heading>Error!</Alert.Heading>
                     <p>
@@ -134,7 +142,15 @@ function OTPVerification() {
                     </p>
                 </Alert>}
             </div>
+            <div className="alert">
+                {success && <Alert variant="success" onClose={() => setSuccess(false)} dismissible>
+                <Alert.Heading>Success!</Alert.Heading>
+                <p>
+                    Phone verification successful
+                </p>
+            </Alert>}
         </div>
+        </div >
     )
 }
 

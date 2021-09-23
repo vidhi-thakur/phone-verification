@@ -29,7 +29,7 @@
   color: rgb(0, 0, 255);
 }
 
-.errorAlert {
+.alert {
   width: 90%;
   max-width: 500px;
   margin: auto;
