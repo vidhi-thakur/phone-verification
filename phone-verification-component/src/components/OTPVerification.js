@@ -16,6 +16,9 @@ function OTPVerification() {
     const [error, setError] = useState("")
     const [show, setShow] = useState(false);
     const [success, setSuccess] = useState(false)
+    const [copyBtnText, setCopyBtnText] = useState("Copy OTP")
+
+    const OTP = "300055"
 
     function validInput(input) {
         if (Number(input) >= 0 && Number(input) <= 9) return true
@@ -65,10 +68,33 @@ function OTPVerification() {
         }
     }
 
+    function generateEnteredOTP(input) {
+        var tempArray = Object.keys(input);
+        var OTPEntered = "";
+        tempArray.map(d => {
+            OTPEntered = OTPEntered + `${input[`${d}`]}`
+        })
+        return OTPEntered
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        setSuccess(true)
+        let enteredOTP = generateEnteredOTP(inputForm)
+        if (enteredOTP === OTP) {
+            setSuccess(true)
+        }
+        else {
+            setError("Entered OTP is wrong. Try again!")
+            setShow(true)
+            setTimeout(() => setShow(false), 10000);
+        }
         setInputForm(initialState)
+    }
+
+    const copyText = () => {
+        navigator.clipboard.writeText(OTP)
+        setCopyBtnText("Copied")
+        setTimeout(() => setCopyBtnText("Copy OTP"), 3000);
     }
 
     const moveFocus = (e) => {
@@ -144,13 +170,14 @@ function OTPVerification() {
             </div>
             <div className="alert">
                 {success && <Alert variant="success" onClose={() => setSuccess(false)} dismissible>
-                <Alert.Heading>Success!</Alert.Heading>
-                <p>
-                    Phone verification successful
-                </p>
-            </Alert>}
+                    <Alert.Heading>Success!</Alert.Heading>
+                    <p>
+                        Phone verification successful
+                    </p>
+                </Alert>}
+            </div>
+            <button className="button copyOTP" onClick={() => copyText()}>{copyBtnText}</button>
         </div>
-        </div >
     )
 }
 

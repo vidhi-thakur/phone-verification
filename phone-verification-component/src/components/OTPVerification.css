@@ -56,3 +56,12 @@ form{
         width: 30px;
     }
 }
+
+.copyOTP {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1rem!important;
+}
