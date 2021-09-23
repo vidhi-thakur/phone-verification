@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './OTPVerification.css'
+import Alert from 'react-bootstrap/Alert'
 
 function OTPVerification() {
 
@@ -13,6 +14,7 @@ function OTPVerification() {
     }
     const [inputForm, setInputForm] = useState(initialState)
     const [error, setError] = useState("")
+    const [show, setShow] = useState(false);
 
     function validInput(input) {
         if (Number(input) >= 0 && Number(input) <= 9) return true
@@ -24,9 +26,10 @@ function OTPVerification() {
         var inputMaxLength = target.maxLength
         var inputLength = target.value.length
         if (!validInput(target.value)) {
-            setError("Enter the valid input.")
+            setError("Invalid input! Enter numbers between 0 and 9.")
+            setShow(true)
+            setTimeout(() => setShow(false), 10000);
         } else {
-            setError("")
             if (inputLength >= inputMaxLength) {
                 focusNext(target)
             }
@@ -67,16 +70,19 @@ function OTPVerification() {
     const pasteDataFromClipboard = (e) => {
         var clipboardData = e.clipboardData.getData('text');
         if (clipboardData.length === 6) {
-            setError("");
             var arrayOfInput = clipboardData.split('')
             if (checkForAllInputs(arrayOfInput)) {
                 updateInputValue(arrayOfInput)
             }
             else {
-                setError("Enter valid data")
+                setError("Invalid input! Enter numbers between 0 and 9.")
+                setShow(true)
+                setTimeout(() => setShow(false), 10000);
             }
         } else {
-            setError("OTP should be 6 digit!")
+            setError("Invalid data! Entered OTP should be a 6 digit number.")
+            setShow(true)
+            setTimeout(() => setShow(false), 10000);
         }
     }
 
@@ -91,11 +97,9 @@ function OTPVerification() {
         arr.map(data => {
             if (validInput(data)) {
                 count++
-                console.log(count)
             }
         })
         if (count === 6) {
-            console.log(count)
             return true
         }
         else {
@@ -122,7 +126,14 @@ function OTPVerification() {
                 </div>
                 <button className="button OTPSubmitButton">Verify Phone Number</button>
             </form>
-            {error && <small className="error">{error}</small>}
+            <div className="errorAlert">
+                {show && <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+                    <Alert.Heading>Error!</Alert.Heading>
+                    <p>
+                        {error}
+                    </p>
+                </Alert>}
+            </div>
         </div>
     )
 }

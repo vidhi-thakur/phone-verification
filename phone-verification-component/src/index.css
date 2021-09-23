@@ -28,3 +28,13 @@
 .text-blue:hover {
   color: rgb(0, 0, 255);
 }
+
+.errorAlert {
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  margin-left: -250px;
+}
